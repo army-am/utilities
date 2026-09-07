@@ -1,0 +1,683 @@
+<title>Коммуналка</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-title" content="Коммуналка">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  color-scheme: light;
+  --plane:#e8edf1; --surface:#fbfcfd; --surface-2:#f2f5f8;
+  --ink:#111820; --ink-2:#4d5a68; --muted:#7d8b99;
+  --grid:#dfe5ea; --rule:#c9d3db; --hair:rgba(17,24,32,.10);
+  --accent:#1d4e6f;
+  --s-blue:#2a72b8; --s-rust:#c25324; --s-brass:#a8791b;
+  --k1:#2a78d6; --k2:#eb6834; --k3:#1baf7a; --dim:#9aa8b4;
+  --good:#0ca30c; --warn:#fab219; --crit:#d03b3b;
+  --slate:#8d9dab;
+  --sans:"Golos Text",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme: dark;
+    --plane:#0b0e12; --surface:#12161b; --surface-2:#171c23;
+    --ink:#eef2f6; --ink-2:#9fadba; --muted:#7d8b99;
+    --grid:#222a33; --rule:#2b343e; --hair:rgba(238,242,246,.12);
+    --accent:#7fb3d5;
+    --s-blue:#4f95d4; --s-rust:#d2703d; --s-brass:#b58a2c;
+    --k1:#3987e5; --k2:#d95926; --k3:#199e70; --dim:#5d6b77;
+    --slate:#66757f;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme: dark;
+  --plane:#0b0e12; --surface:#12161b; --surface-2:#171c23;
+  --ink:#eef2f6; --ink-2:#9fadba; --muted:#7d8b99;
+  --grid:#222a33; --rule:#2b343e; --hair:rgba(238,242,246,.12);
+  --accent:#7fb3d5;
+  --s-blue:#4f95d4; --s-rust:#d2703d; --s-brass:#b58a2c;
+  --k1:#3987e5; --k2:#d95926; --k3:#199e70; --dim:#5d6b77;
+  --slate:#66757f;
+}
+*{box-sizing:border-box}
+body{background:var(--plane);color:var(--ink);font-family:var(--sans);
+  font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 20px 64px}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* ---- шапка ---- */
+.masthead{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 16px;
+  padding-bottom:14px;border-bottom:2px solid var(--accent)}
+.masthead h1{font-size:23px;font-weight:700;margin:0;letter-spacing:-.01em}
+.masthead .sub{color:var(--ink-2);font-size:13.5px}
+.masthead .asof{margin-left:auto;color:var(--muted);font-size:12px;
+  text-transform:uppercase;letter-spacing:.08em}
+
+/* ---- герой: уравнение долга ---- */
+.hero{background:var(--surface);border:1px solid var(--hair);border-top:none;padding:20px 22px 16px}
+.eq{display:grid;gap:14px;align-items:end;
+  grid-template-columns:1fr 26px 1fr 26px 1.25fr}
+.eq-op{font-family:var(--mono);font-size:20px;color:var(--muted);
+  align-self:center;text-align:center;font-weight:500;line-height:1}
+.eq-lab{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--muted);font-weight:600;margin-bottom:5px}
+.eq-val{font-family:var(--mono);font-size:26px;font-weight:600;letter-spacing:-.02em;
+  line-height:1.1;color:var(--ink-2)}
+.eq-sub{font-size:12.5px;color:var(--muted);margin-top:4px}
+.eq-cell.now{border-left:3px solid var(--accent);padding-left:14px;margin-left:2px}
+.eq-cell.now .eq-lab{color:var(--accent)}
+.eq-cell.now .eq-val{font-size:36px;color:var(--ink)}
+.eq-cell.now .eq-sub{color:var(--ink-2)}
+.hero-note{margin:16px 0 0;padding-top:13px;border-top:1px solid var(--grid);
+  font-size:13px;color:var(--ink-2);line-height:1.5;max-width:76ch}
+.hero-note b{color:var(--ink);font-weight:600}
+
+/* ---- карточки последних событий ---- */
+.events{display:grid;gap:12px;margin-top:12px;grid-template-columns:1fr 1fr}
+.ev{background:var(--surface);border:1px solid var(--hair);padding:14px 16px 13px}
+.ev-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.ev-t{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.ev-d{font-size:12.5px;color:var(--ink-2);font-weight:500}
+.ev-v{font-family:var(--mono);font-size:24px;font-weight:600;letter-spacing:-.02em;margin-top:7px;line-height:1.15}
+.ev-split{display:flex;gap:20px;flex-wrap:wrap;margin-top:8px;font-size:12.5px;color:var(--ink-2)}
+.ev-split b{font-family:var(--mono);font-weight:600;color:var(--ink)}
+.ev-f{margin-top:9px;padding-top:8px;border-top:1px solid var(--grid);font-size:12px;color:var(--muted)}
+
+/* ---- полосы-секции ---- */
+.band{margin-top:26px}
+.band>.head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+  padding-bottom:8px;border-bottom:1px solid var(--rule)}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.12em;
+  color:var(--accent);font-weight:600}
+.band h2{font-size:17px;font-weight:600;margin:0}
+.band .lede{color:var(--ink-2);font-size:13.5px;max-width:62ch;margin:10px 0 0}
+.panel{background:var(--surface);border:1px solid var(--hair);margin-top:14px;padding:14px 16px 10px}
+.cols{display:grid;gap:14px;margin-top:14px}
+@media(min-width:860px){.cols.c3{grid-template-columns:repeat(3,1fr)}
+  .cols.cw{grid-template-columns:1fr 1.45fr}
+  .cols.c2{grid-template-columns:1.15fr .85fr}}
+.money-wrap{display:grid;grid-template-columns:minmax(0,700px) minmax(220px,1fr);gap:8px 30px;align-items:center}
+#c-money{width:700px;max-width:100%}
+.money-side{display:grid;gap:15px;padding-left:22px;border-left:1px solid var(--grid)}
+.stat-l{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.stat-v{font-family:var(--mono);font-size:23px;font-weight:600;letter-spacing:-.035em;line-height:1.1;margin-top:3px}
+.stat-s{font-size:11.5px;color:var(--muted);margin-top:2px}
+.stat-note{font-size:12.5px;color:var(--ink-2);padding-top:11px;border-top:1px solid var(--grid)}
+.stat-note b{font-family:var(--mono);font-weight:600;color:var(--ink)}
+.cap{font-size:12.5px;color:var(--ink-2);margin:8px 0 2px}
+.cap b{color:var(--ink);font-weight:600}
+figure{margin:0}
+figcaption{font-size:13px;font-weight:600;margin-bottom:2px}
+.figsub{font-size:12px;color:var(--muted);margin-bottom:8px}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.scroll{overflow-x:auto}
+
+/* ---- легенда ---- */
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:8px 0 2px;font-size:12px;color:var(--ink-2)}
+.legend i{width:11px;height:11px;border-radius:2px;display:inline-block;margin-right:5px;vertical-align:-1px}
+.legend i.ln{width:16px;height:2.5px;border-radius:2px;vertical-align:4px}
+
+/* ---- таблица тарифов ---- */
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--muted);font-weight:600;padding:0 10px 8px 0;border-bottom:1px solid var(--rule)}
+td{padding:9px 10px 9px 0;border-bottom:1px solid var(--grid);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+td.r,th.r{text-align:right;padding-right:0}
+.svc{font-weight:600}
+.unit{color:var(--muted);font-size:12px;font-family:var(--mono)}
+.rate{color:var(--ink-2)}
+.cagr{font-family:var(--mono);font-weight:600}
+.flag{display:inline-block;font-size:11px;padding:1px 6px;border-radius:2px;
+  background:var(--surface-2);color:var(--ink-2);border:1px solid var(--hair);margin-left:6px}
+
+/* ---- список внимания ---- */
+.todo{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:1px;background:var(--rule);border:1px solid var(--hair)}
+.todo li{background:var(--surface);padding:12px 14px;display:grid;
+  grid-template-columns:auto 1fr;gap:12px;align-items:start}
+.chip{font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;font-weight:600;
+  padding:3px 7px;border-radius:2px;white-space:nowrap;border:1px solid transparent}
+.chip.c{background:rgba(208,59,59,.13);color:var(--crit);border-color:rgba(208,59,59,.35)}
+.chip.w{background:rgba(250,178,25,.16);color:#8a6000;border-color:rgba(250,178,25,.45)}
+.chip.i{background:var(--surface-2);color:var(--ink-2);border-color:var(--hair)}
+:root[data-theme="dark"] .chip.w,
+:root:not([data-theme="light"]) .chip.w{color:var(--warn)}
+.todo .t{font-weight:600;font-size:13.5px}
+.todo .d{font-size:12.5px;color:var(--ink-2);margin-top:2px}
+.todo li{grid-template-columns:auto 1fr auto}
+.xbtn{background:none;border:1px solid var(--hair);color:var(--muted);cursor:pointer;
+  font:inherit;font-size:11.5px;padding:4px 9px;border-radius:3px;white-space:nowrap;align-self:center}
+.xbtn:hover{border-color:var(--rule);color:var(--ink-2);background:var(--surface-2)}
+.xbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ctl-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-top:12px;font-size:12.5px;color:var(--muted)}
+.ctl-empty{background:var(--surface);border:1px solid var(--hair);padding:16px;font-size:13.5px;color:var(--ink-2)}
+.arch summary{margin-top:12px}
+.arch ul{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:1px;background:var(--rule);border:1px solid var(--hair)}
+.arch li{background:var(--surface);padding:8px 12px;display:grid;grid-template-columns:1fr auto;
+  gap:10px;align-items:center;font-size:12.5px;color:var(--ink-2)}
+.arch .t{color:var(--ink)}
+.ctl-note{font-size:12px;color:var(--muted);margin-top:10px}
+
+/* ---- тултип ---- */
+.tt{position:fixed;pointer-events:none;z-index:9;background:var(--surface);
+  border:1px solid var(--rule);box-shadow:0 6px 18px rgba(0,0,0,.14);
+  padding:8px 10px;font-size:12.5px;opacity:0;transition:opacity .08s;min-width:130px}
+.tt.on{opacity:1}
+.tt .tp{font-weight:600;margin-bottom:5px;font-family:var(--mono)}
+.tt .row{display:flex;justify-content:space-between;gap:14px;line-height:1.6}
+.tt .row span:first-child{color:var(--ink-2)}
+.tt .row span:last-child{font-family:var(--mono);font-variant-numeric:tabular-nums}
+details{margin-top:10px;font-size:13px}
+summary{cursor:pointer;color:var(--accent);font-weight:600;font-size:12.5px}
+summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+details table{margin-top:10px;font-size:12.5px}
+.foot{margin-top:32px;padding-top:14px;border-top:1px solid var(--rule);
+  font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 22px}
+.foot b{color:var(--ink-2);font-weight:600}
+@media(max-width:760px){
+  .wrap{padding:18px 13px 48px}
+  .masthead h1{font-size:20px}
+  .masthead .asof{margin-left:0;width:100%}
+  .hero{padding:16px 15px 14px}
+  .eq{grid-template-columns:1fr;gap:0}
+  .eq-op{display:none}
+  .eq-op+.eq-cell{margin-top:13px;padding-top:12px;border-top:1px solid var(--grid)}
+  .eq-lab[data-op]::before{content:attr(data-op) " ";color:var(--muted);font-family:var(--mono)}
+  .eq-cell.now{border-left:none;border-top:2px solid var(--accent);padding-left:0;
+    margin-left:0;padding-top:11px;margin-top:6px}
+  .eq-cell.now .eq-val{font-size:31px}
+  .eq-val{font-size:22px}
+  .events{grid-template-columns:1fr}
+  .band>.head{gap:6px}
+  .band h2{font-size:16px}
+  .money-wrap{grid-template-columns:1fr;gap:16px}
+  .money-side{padding-left:0;border-left:none;padding-top:14px;border-top:1px solid var(--grid)}
+  #c-money{width:auto}
+  #c-money>svg{min-width:560px;width:560px}
+  .scroll{-webkit-overflow-scrolling:touch}
+  .todo li{grid-template-columns:1fr;gap:6px}
+  .chip{justify-self:start}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+
+<div class="masthead">
+  <h1>Коммуналка</h1>
+  <div class="sub">квартира · машино-место</div>
+  <div class="asof" id="asof"></div>
+</div>
+
+<section class="hero" id="hero"></section>
+<div class="events" id="events"></div>
+
+<section class="band">
+  <div class="head"><span class="eyebrow">Деньги</span><h2>Начисления, платежи и долг</h2></div>
+  <p class="lede">Последние 12 месяцев. Последние 24 месяца, три полосы с общей осью времени: начислено, оплачено и реальный долг — начисленное за всю историю минус всё оплаченное. Числа над столбцами — тысячи ₽.</p>
+  <div class="panel">
+    <div class="legend">
+      <span><i style="background:var(--slate)"></i>Начислено за месяц</span>
+      <span><i style="background:var(--s-blue)"></i>Мои платежи</span>
+      <span><i class="ln" style="background:var(--s-rust)"></i>Мой реальный долг</span>
+    </div>
+    <div class="money-wrap">
+      <div class="scroll"><div id="c-money"></div></div>
+      <div class="money-side" id="money-side"></div>
+    </div>
+    <details><summary>Показать таблицей за 24 месяца</summary><div class="scroll" id="t-money"></div></details>
+  </div>
+</section>
+
+<section class="band">
+  <div class="head"><span class="eyebrow">Потребление</span><h2>Что и сколько уходит</h2></div>
+  <p class="lede">Объёмы, а не рубли — здесь видно ваше поведение отдельно от тарифов. Всё по квартире.</p>
+  <div class="cols cw">
+    <div class="panel"><figure>
+      <figcaption>Отопление по счётчику квартиры</figcaption>
+      <div class="figsub">Гкал в месяц. Сезоны наложены друг на друга: сентябрь слева, май справа</div>
+      <div id="c-heat"></div>
+      <div class="legend" id="l-heat"></div>
+      <p class="cap">Тепло, которое намотал счётчик в вашей квартире. Отопление подъездов, лестниц и прочих мест общего пользования сюда не входит — оно идёт в квитанции отдельной строкой и считается от площади, а не от счётчика.</p>
+    </figure></div>
+    <div class="panel"><figure>
+      <figcaption>Вода по счётчикам квартиры</figcaption>
+      <div class="figsub">м³ в месяц, последние 24</div>
+      <div id="c-water"></div>
+      <div class="legend">
+        <span><i class="ln" style="background:var(--s-blue)"></i>ХВС — холодная</span>
+        <span><i class="ln" style="background:var(--s-rust)"></i>ГВС — горячая</span>
+      </div>
+      <p class="cap">Только ваше потребление по квартирным счётчикам. Общедомовая вода начисляется отдельными строками «ХВС ОДН» и «Водоотведение ОДН» и здесь не показана. Водоотведение отдельной линией не рисуем: УК считает его как сумму холодной и горячей.</p>
+    </figure></div>
+  </div>
+  <div class="panel" style="margin-top:14px"><figure>
+      <figcaption>Электроэнергия на общедомовые нужды</figcaption>
+      <div class="figsub">кВт·ч в месяц — доля квартиры, последние 24</div>
+      <div id="c-odn"></div>
+      <div class="legend"><span><i style="background:var(--s-brass)"></i>Начислено</span><span><i style="background:var(--crit)"></i>Строки в квитанции нет</span></div>
+      <p class="cap">Свет в подъездах и на лестницах, лифты, насосы, тепловой пункт, шлагбаумы. Личного счётчика электроэнергии в этих квитанциях нет вообще — вся электроэнергия здесь общедомовая, и доля квартиры считается пропорционально её площади.</p>
+  </figure></div>
+</section>
+
+<section class="band">
+  <div class="head"><span class="eyebrow">Цена</span><h2>Тарифы: что растёт быстрее всех</h2></div>
+  <p class="lede">Скорость роста считается от первого сопоставимого месяца. Где УК меняла базу начисления, ряд обрезан — иначе смена единицы выглядит как подорожание в сотни раз.</p>
+  <div class="panel"><div class="scroll"><div id="t-tariff"></div></div></div>
+</section>
+
+<section class="band">
+  <div class="head"><span class="eyebrow">Структура</span><h2>За что вы платите</h2></div>
+  <div class="cols c2">
+    <div class="panel"><figure>
+      <figcaption>Начислено по квартире за 12 месяцев</figcaption>
+      <div class="figsub">сентябрь 2025 — август 2026</div>
+      <div id="c-struct"></div>
+    </figure></div>
+    <div class="panel"><figure>
+      <figcaption>Сумма всех услуг «за метр»</figcaption>
+      <div class="figsub">₽/м² в месяц — содержание, безопасность, шлагбаумы, энергосбережение</div>
+      <div id="c-rate"></div>
+      <p class="cap" id="rate-note"></p>
+    </figure></div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="head"><span class="eyebrow">Контроль</span><h2>Требует внимания</h2></div>
+  <p class="lede">Список пересобирается из свода при каждом обновлении данных: пункт уходит сам, когда причина исчезает — пришла квитанция, УК зачла платёж, нашлась выписка. Ненужное можно скрыть, оно уедет в архив внизу.</p>
+  <div class="ctl-head" id="ctl-head"></div>
+  <ul class="todo" id="todo"></ul>
+  <div id="ctl-arch"></div>
+  <p class="ctl-note" id="ctl-note"></p>
+</section>
+
+<div class="foot" id="foot"></div>
+</div>
+<div class="tt" id="tt"></div>
+
+<script>
+const ALERTS = [{"id": "unpaid-2026-08", "level": "crit", "title": "Платёж от 31.08.2026 не зачтён", "text": "52 815,05 ₽ отправлены, но в квитанции за август 2026 строка «Оплачено» пустая. Разрыв закроется следующей квитанцией. Впредь платить до 25 числа."}, {"id": "gone-вывоз-тко-2026-08", "level": "warn", "title": "В квитанции за август 2026 нет строки «Вывоз ТКО»", "text": "Услуга была в 11 из последних 12 месяцев. Может вернуться перерасчётом в следующей квитанции."}, {"id": "gone-электроэнергия-2026-08", "level": "warn", "title": "В квитанции за август 2026 нет строки «Электроэнергия»", "text": "Услуга была в 11 из последних 12 месяцев. Может вернуться перерасчётом в следующей квитанции."}, {"id": "newsvc-безопасн-шлагбаум-энергосб", "level": "warn", "title": "Новые услуги без предъявленного основания", "text": "Безопасность МКД, Шлагбаум, Энергосбережение появились в квитанциях за последний год. Ставка «за метр» выросла со 103,32 до 132,23 ₽ — плюс 28 %, хотя строка «Содержание жилья» при этом снизилась. Протокола общего собрания в папке нет."}, {"id": "meter-2026-08-горячая-вода", "level": "warn", "title": "Показания «Горячая вода» не менялись — август 2026", "text": "Предыдущие и текущие показания совпадают: либо показания не передавали, либо счётчик стоит. УК тогда считает по среднему или не начисляет вовсе."}, {"id": "meter-2025-12-отопление-по-пу", "level": "warn", "title": "Показания «Отопление по ПУ» не менялись — декабрь 2025", "text": "Предыдущие и текущие показания совпадают: либо показания не передавали, либо счётчик стоит. УК тогда считает по среднему или не начисляет вовсе."}, {"id": "meter-2026-03-отопление-по-пу", "level": "warn", "title": "Показания «Отопление по ПУ» не менялись — март 2026", "text": "Предыдущие и текущие показания совпадают: либо показания не передавали, либо счётчик стоит. УК тогда считает по среднему или не начисляет вовсе."}, {"id": "meter-2025-11-отопление-по-пу", "level": "warn", "title": "Показания «Отопление по ПУ» не менялись — ноябрь 2025", "text": "Предыдущие и текущие показания совпадают: либо показания не передавали, либо счётчик стоит. УК тогда считает по среднему или не начисляет вовсе."}, {"id": "meter-2026-08-холодная-вода", "level": "warn", "title": "Показания «Холодная вода» не менялись — август 2026", "text": "Предыдущие и текущие показания совпадают: либо показания не передавали, либо счётчик стоит. УК тогда считает по среднему или не начисляет вовсе."}, {"id": "nobank-10", "level": "info", "title": "10 платежей без банковского подтверждения", "text": "02.11.2024, 02.12.2024, 19.02.2025, 21.08.2024, 21.10.2024 — на 207 704 ₽. Источник пока сама УК, то есть контроль сравнивает её с собой. Нужна выписка за этот период."}, {"id": "card-2024", "level": "info", "title": "Запросить у УК выписку по лицевому счёту", "text": "Внутренняя распечатка УК со всеми начислениями и зачтёнными платежами — единственное, где видны правки задним числом. Последнюю брали 879 дней назад; в ней нашёлся перенос переплаты 138,63 ₽, из-за которого квитанции с тех пор завышают долг."}, {"id": "noreceipt-2022-04-mm", "level": "info", "title": "Нет квитанции за апрель 2022 по паркингу", "text": "Сумма 1 915,75 ₽ восстановлена расчётом по цепочке, детализации по услугам нет. Можно запросить у УК."}, {"id": "noreceipt-2026-06-kv", "level": "info", "title": "Нет квитанции за июнь 2026 по квартире", "text": "Сумма 23 142,95 ₽ восстановлена расчётом по цепочке, детализации по услугам нет. Можно запросить у УК."}, {"id": "tariff-отопление-по-прибору-уч-та-2025-09", "level": "info", "title": "Отопление: тариф +16% с сентября 2025", "text": "2 569,16 → 2 985,38. Проверить основание."}, {"id": "tariff-содержание-жилое-2026-02", "level": "info", "title": "Содержание: тариф -22% с февраля 2026", "text": "103,32 → 80,18. Строка снижена, но одновременно добавлены новые статьи — итоговая ставка за метр выросла. Проверить основание."}];
+const D = {"money": [{"p": "2020-09", "kv": 20389.34, "mm": 0, "nach": 20389.34, "pay": 14000.0, "debt": 6389.34}, {"p": "2020-10", "kv": 12778.66, "mm": 0, "nach": 12778.66, "pay": 0, "debt": 19168}, {"p": "2020-11", "kv": 12778.66, "mm": 0, "nach": 12778.66, "pay": 0, "debt": 31946.66}, {"p": "2020-12", "kv": 17012.09, "mm": 0, "nach": 17012.09, "pay": 300.0, "debt": 48658.75}, {"p": "2021-01", "kv": 18948.94, "mm": 0, "nach": 18948.94, "pay": 0, "debt": 67607.69}, {"p": "2021-02", "kv": 34099.44, "mm": 0, "nach": 34099.44, "pay": 13000.0, "debt": 88707.13}, {"p": "2021-03", "kv": 16430.57, "mm": 0, "nach": 16430.57, "pay": 67607.69, "debt": 37530.01}, {"p": "2021-04", "kv": 15786.96, "mm": 0, "nach": 15786.96, "pay": 0, "debt": 53316.97}, {"p": "2021-05", "kv": 14550.59, "mm": 0, "nach": 14550.59, "pay": 0, "debt": 67867.56}, {"p": "2021-06", "kv": 13551.73, "mm": 0, "nach": 13551.73, "pay": 0, "debt": 81419.29}, {"p": "2021-07", "kv": 13300.52, "mm": 0, "nach": 13300.52, "pay": 0, "debt": 94719.81}, {"p": "2021-08", "kv": 14682.34, "mm": 683.9, "nach": 15366.24, "pay": 81419.29, "debt": 28666.76}, {"p": "2021-09", "kv": 17367.04, "mm": 1453.5, "nach": 18820.54, "pay": 0, "debt": 47487.3}, {"p": "2021-10", "kv": 17389.28, "mm": 1679.96, "nach": 19069.24, "pay": 0, "debt": 66556.54}, {"p": "2021-11", "kv": 18062.13, "mm": 1725.97, "nach": 19788.1, "pay": 0, "debt": 86344.64}, {"p": "2021-12", "kv": 20952.79, "mm": 1979.45, "nach": 22932.24, "pay": 0, "debt": 109276.88}, {"p": "2022-01", "kv": 19552.54, "mm": 2131.57, "nach": 21684.11, "pay": 0, "debt": 130960.99}, {"p": "2022-02", "kv": 23055.5, "mm": 2007.37, "nach": 25062.87, "pay": 112779.88, "debt": 43243.98}, {"p": "2022-03", "kv": 19694.09, "mm": 1927.75, "nach": 21621.84, "pay": 0, "debt": 64865.82}, {"p": "2022-04", "kv": 19537.41, "mm": 1915.75, "nach": 21453.16, "pay": 0, "debt": 86318.98}, {"p": "2022-05", "kv": 17667.29, "mm": 1755.81, "nach": 19423.1, "pay": 0, "debt": 105742.08}, {"p": "2022-06", "kv": 16577.5, "mm": 1527.17, "nach": 18104.67, "pay": 0, "debt": 123846.75}, {"p": "2022-07", "kv": 16258.98, "mm": 1362.71, "nach": 17621.69, "pay": 105742.08, "debt": 35726.36}, {"p": "2022-08", "kv": 15583.32, "mm": 1489.81, "nach": 17073.13, "pay": 0, "debt": 52799.49}, {"p": "2022-09", "kv": 18129.83, "mm": 1726.48, "nach": 19856.31, "pay": 0, "debt": 72655.8}, {"p": "2022-10", "kv": 19520.4, "mm": 1922.63, "nach": 21443.03, "pay": 0, "debt": 94098.83}, {"p": "2022-11", "kv": 19703.3, "mm": 1968.8, "nach": 21672.1, "pay": 72655.7, "debt": 43115.23}, {"p": "2022-12", "kv": 21935.26, "mm": 2169.85, "nach": 24105.11, "pay": 0, "debt": 67220.34}, {"p": "2023-01", "kv": 24420.64, "mm": 1819.55, "nach": 26240.19, "pay": 0, "debt": 93460.53}, {"p": "2023-02", "kv": 27440.14, "mm": 2383.21, "nach": 29823.35, "pay": 69187.86, "debt": 54096.02}, {"p": "2023-03", "kv": 23152.24, "mm": 2061.8, "nach": 25214.04, "pay": 24568.61, "debt": 54741.45}, {"p": "2023-04", "kv": 20055.03, "mm": 1858.34, "nach": 21913.37, "pay": 0, "debt": 76654.82}, {"p": "2023-05", "kv": 17025.68, "mm": 1635.27, "nach": 18660.95, "pay": 0, "debt": 95315.77}, {"p": "2023-06", "kv": 16581.19, "mm": 1647.69, "nach": 18228.88, "pay": 0, "debt": 113544.65}, {"p": "2023-07", "kv": 16141.19, "mm": 1627.59, "nach": 17768.78, "pay": 0, "debt": 131313.43}, {"p": "2023-08", "kv": 16380.49, "mm": 1635.12, "nach": 18015.61, "pay": 50000.0, "debt": 99329.04}, {"p": "2023-09", "kv": 17277.9, "mm": 1637.41, "nach": 18915.31, "pay": 50000.0, "debt": 68244.35}, {"p": "2023-10", "kv": 23904.6, "mm": 1888.91, "nach": 25793.51, "pay": 25000.0, "debt": 69037.86}, {"p": "2023-11", "kv": 27545.7, "mm": 2055.25, "nach": 29600.95, "pay": 25000.0, "debt": 73638.81}, {"p": "2023-12", "kv": 30770.68, "mm": 2411.4, "nach": 33182.08, "pay": 0, "debt": 106820.89}, {"p": "2024-01", "kv": 32743.77, "mm": 2190.87, "nach": 34934.64, "pay": 0, "debt": 141755.53}, {"p": "2024-02", "kv": 28550.66, "mm": 2145.24, "nach": 30695.9, "pay": 22736.92, "debt": 149714.51}, {"p": "2024-03", "kv": 19211.35, "mm": 1530.07, "nach": 20741.42, "pay": 0, "debt": 170455.93}, {"p": "2024-04", "kv": 19340.38, "mm": 1634.73, "nach": 20975.11, "pay": 149714.51, "debt": 41716.53}, {"p": "2024-05", "kv": 17066.41, "mm": 1674.13, "nach": 18740.54, "pay": 20741.42, "debt": 39715.65}, {"p": "2024-06", "kv": 16419.46, "mm": 1562.5, "nach": 17981.96, "pay": 0, "debt": 57697.61}, {"p": "2024-07", "kv": 18062.45, "mm": 1576.86, "nach": 19639.31, "pay": 0, "debt": 77336.92}, {"p": "2024-08", "kv": 18912.33, "mm": 1878.02, "nach": 20790.35, "pay": 77336.92, "debt": 20790.35}, {"p": "2024-09", "kv": 18910.58, "mm": 1758.54, "nach": 20669.12, "pay": 0, "debt": 41459.47}, {"p": "2024-10", "kv": 24902.38, "mm": 1898.22, "nach": 26800.6, "pay": 41580.7, "debt": 26679.37}, {"p": "2024-11", "kv": 28322.56, "mm": 2195.65, "nach": 30518.21, "pay": 20669.12, "debt": 36528.46}, {"p": "2024-12", "kv": 29196.52, "mm": 2391.88, "nach": 31588.4, "pay": 26679.37, "debt": 41437.49}, {"p": "2025-01", "kv": 28154.57, "mm": 2538.91, "nach": 30693.48, "pay": 0, "debt": 72130.97}, {"p": "2025-02", "kv": 29344.07, "mm": 2380.5, "nach": 31724.57, "pay": 41437.49, "debt": 62418.05}, {"p": "2025-03", "kv": 28146.05, "mm": 2285.49, "nach": 30431.54, "pay": 0, "debt": 92849.59}, {"p": "2025-04", "kv": 22317.45, "mm": 2077.68, "nach": 24395.13, "pay": 0, "debt": 117244.72}, {"p": "2025-05", "kv": 18025.27, "mm": 1934.85, "nach": 19960.12, "pay": 92849.59, "debt": 44355.25}, {"p": "2025-06", "kv": 20089.21, "mm": 1818.28, "nach": 21907.49, "pay": 0, "debt": 66262.74}, {"p": "2025-07", "kv": 21112.29, "mm": 2017.55, "nach": 23129.84, "pay": 0, "debt": 89392.58}, {"p": "2025-08", "kv": 20381.41, "mm": 1962.03, "nach": 22343.44, "pay": 0, "debt": 111736.02}, {"p": "2025-09", "kv": 21605.5, "mm": 1941.36, "nach": 23546.86, "pay": 89392.58, "debt": 45890.3}, {"p": "2025-10", "kv": 25056.31, "mm": 2304.06, "nach": 27360.37, "pay": 22343.44, "debt": 50907.23}, {"p": "2025-11", "kv": 22335.36, "mm": 2252.9, "nach": 24588.26, "pay": 45890.3, "debt": 29605.19}, {"p": "2025-12", "kv": 23385.9, "mm": 2318.28, "nach": 25704.18, "pay": 29605.19, "debt": 25704.18}, {"p": "2026-01", "kv": 33248.05, "mm": 2738.11, "nach": 35986.16, "pay": 0, "debt": 61690.34}, {"p": "2026-02", "kv": 40963.42, "mm": 3366.9, "nach": 44330.32, "pay": 25704.18, "debt": 80316.48}, {"p": "2026-03", "kv": 29036.57, "mm": 2935.33, "nach": 31971.9, "pay": 0, "debt": 112288.38}, {"p": "2026-04", "kv": 29670.49, "mm": 2624.08, "nach": 32294.57, "pay": 0, "debt": 144582.95}, {"p": "2026-05", "kv": 24903.45, "mm": 2494.02, "nach": 27397.47, "pay": 112288.38, "debt": 59692.04}, {"p": "2026-06", "kv": 23142.95, "mm": 2306.25, "nach": 25449.2, "pay": 0, "debt": 85141.24}, {"p": "2026-07", "kv": 24986.01, "mm": 2379.84, "nach": 27365.85, "pay": 59692.04, "debt": 52815.05}, {"p": "2026-08", "kv": 22349.67, "mm": 1970.23, "nach": 24319.9, "pay": 52815.05, "debt": 77134.95}], "structure": [{"name": "Содержание помещения", "v": 152445.5}, {"name": "Безопасность МКД", "v": 46518.42}, {"name": "Отопление", "v": 45121.73}, {"name": "Без детализации", "v": 23142.95}, {"name": "Электроэнергия", "v": 15230.32}, {"name": "Вывоз ТКО", "v": 10464.0}, {"name": "ГВС", "v": 9006.62}, {"name": "Водоотведение", "v": 7814.82}, {"name": "ХВС", "v": 7593.05}, {"name": "Шлагбаум", "v": 2860.39}, {"name": "Энергосбережение", "v": 485.88}], "rate_m2": [{"p": "2023-01", "v": 92.94}, {"p": "2023-02", "v": 92.94}, {"p": "2023-03", "v": 92.94}, {"p": "2023-04", "v": 92.94}, {"p": "2023-05", "v": 92.94}, {"p": "2023-06", "v": 92.94}, {"p": "2023-07", "v": 92.94}, {"p": "2023-08", "v": 92.94}, {"p": "2023-09", "v": 92.94}, {"p": "2023-10", "v": 92.94}, {"p": "2023-11", "v": 92.94}, {"p": "2023-12", "v": 92.94}, {"p": "2024-01", "v": 92.94}, {"p": "2024-02", "v": 92.94}, {"p": "2024-03", "v": 90.17}, {"p": "2024-04", "v": 90.17}, {"p": "2024-05", "v": 90.17}, {"p": "2024-06", "v": 90.17}, {"p": "2024-07", "v": 103.32}, {"p": "2024-08", "v": 103.32}, {"p": "2024-09", "v": 103.32}, {"p": "2024-10", "v": 103.32}, {"p": "2024-11", "v": 103.32}, {"p": "2024-12", "v": 103.32}, {"p": "2025-01", "v": 103.32}, {"p": "2025-02", "v": 103.32}, {"p": "2025-03", "v": 103.32}, {"p": "2025-04", "v": 103.32}, {"p": "2025-05", "v": 103.32}, {"p": "2025-06", "v": 103.32}, {"p": "2025-07", "v": 103.32}, {"p": "2025-08", "v": 103.32}, {"p": "2025-09", "v": 103.32}, {"p": "2025-10", "v": 103.32}, {"p": "2025-11", "v": 103.32}, {"p": "2025-12", "v": 103.32}, {"p": "2026-01", "v": 103.32}, {"p": "2026-02", "v": 146.27}, {"p": "2026-03", "v": 132.23}, {"p": "2026-04", "v": 132.23}, {"p": "2026-05", "v": 132.23}, {"p": "2026-07", "v": 132.23}, {"p": "2026-08", "v": 132.23}], "heat_seasons": [{"season": "2022/23", "m": {"2": 2.247, "3": 0.824, "4": 0.3}, "total": 3.4}, {"season": "2023/24", "m": {"10": 2.0, "11": 2.9, "12": 3.247, "1": 4.5, "2": 2.982, "3": 1.7, "4": 0.7}, "total": 18.0}, {"season": "2024/25", "m": {"10": 1.9, "11": 2.4, "12": 2.3, "1": 2.0, "2": 2.5, "3": 2.0, "4": 0.5}, "total": 13.6}, {"season": "2025/26", "m": {"9": 0.5, "10": 0.5, "1": 2.0, "2": 3.0, "4": 1.0}, "total": 7.0}], "water": [{"p": "2020-12", "hvs": 5.79, "gvs": 0.19}, {"p": "2021-01", "hvs": 6.15, "gvs": 2.92}, {"p": "2021-02", "hvs": 2.11, "gvs": 2.37}, {"p": "2021-03", "hvs": 1.71, "gvs": 0.51}, {"p": "2021-04", "hvs": 1.88, "gvs": 0.01}, {"p": "2021-05", "hvs": 3.14, "gvs": 0.12}, {"p": "2021-06", "hvs": 0.58, "gvs": 0}, {"p": "2021-07", "hvs": 2.42, "gvs": 0.07}, {"p": "2021-08", "hvs": 4.94, "gvs": 1.64}, {"p": "2021-09", "hvs": 10.99, "gvs": 5.37}, {"p": "2021-10", "hvs": 8.46, "gvs": 3.97}, {"p": "2021-11", "hvs": 8.77, "gvs": 5.1}, {"p": "2021-12", "hvs": 10.68, "gvs": 5.78}, {"p": "2022-01", "hvs": 10.39, "gvs": 6.58}, {"p": "2022-02", "hvs": 8.53, "gvs": 5.54}, {"p": "2022-03", "hvs": 8.95, "gvs": 4.56}, {"p": "2022-04", "hvs": 8.31, "gvs": 5.68}, {"p": "2022-05", "hvs": 9.76, "gvs": 5.62}, {"p": "2022-06", "hvs": 9.31, "gvs": 6.11}, {"p": "2022-07", "hvs": 9.48, "gvs": 5.6}, {"p": "2022-08", "hvs": 8.06, "gvs": 3.17}, {"p": "2022-09", "hvs": 11.54, "gvs": 4.99}, {"p": "2022-10", "hvs": 10.43, "gvs": 4.82}, {"p": "2022-11", "hvs": 7.6, "gvs": 3.14}, {"p": "2022-12", "hvs": 8.77, "gvs": 4.62}, {"p": "2023-01", "hvs": 1.66, "gvs": 4.41}, {"p": "2023-02", "hvs": 9.04, "gvs": 4.08}, {"p": "2023-03", "hvs": 10.79, "gvs": 4.66}, {"p": "2023-04", "hvs": 10.11, "gvs": 4.52}, {"p": "2023-05", "hvs": 9.35, "gvs": 3.79}, {"p": "2023-06", "hvs": 5.21, "gvs": 2.11}, {"p": "2023-07", "hvs": 4.24, "gvs": 1.38}, {"p": "2023-08", "hvs": 4.9, "gvs": 1.69}, {"p": "2023-09", "hvs": 10.6, "gvs": 3.93}, {"p": "2023-10", "hvs": 4.29, "gvs": 4.37}, {"p": "2023-11", "hvs": 9.17, "gvs": 3.54}, {"p": "2023-12", "hvs": 8.89, "gvs": 3.85}, {"p": "2024-01", "hvs": 8.58, "gvs": 3.56}, {"p": "2024-02", "hvs": 9.58, "gvs": 4.45}, {"p": "2024-03", "hvs": 10.07, "gvs": 5.1}, {"p": "2024-04", "hvs": 12.74, "gvs": 5.61}, {"p": "2024-05", "hvs": 8.41, "gvs": 3.78}, {"p": "2024-06", "hvs": 9.4, "gvs": 3.39}, {"p": "2024-07", "hvs": 7.8, "gvs": 3.22}, {"p": "2024-08", "hvs": 13.89, "gvs": 3.2}, {"p": "2024-09", "hvs": 11.1, "gvs": 4.4}, {"p": "2024-10", "hvs": 12.55, "gvs": 4.83}, {"p": "2024-11", "hvs": 10.3, "gvs": 4.23}, {"p": "2024-12", "hvs": 9.24, "gvs": 4.41}, {"p": "2025-01", "hvs": 10.44, "gvs": 4.67}, {"p": "2025-02", "hvs": 9.74, "gvs": 5.5}, {"p": "2025-03", "hvs": 13.22, "gvs": 6.35}, {"p": "2025-04", "hvs": 8.35, "gvs": 3.19}, {"p": "2025-05", "hvs": 1.26, "gvs": 0.49}, {"p": "2025-06", "hvs": 8.59, "gvs": 7.85}, {"p": "2025-07", "hvs": 9.98, "gvs": 3.5}, {"p": "2025-08", "hvs": 10.5, "gvs": 3.57}, {"p": "2025-09", "hvs": 11.47, "gvs": 4.13}, {"p": "2025-10", "hvs": 11.12, "gvs": 3.93}, {"p": "2025-11", "hvs": 7.22, "gvs": 2.58}, {"p": "2025-12", "hvs": 9.96, "gvs": 3.44}, {"p": "2026-01", "hvs": 9.67, "gvs": 3.02}, {"p": "2026-02", "hvs": 8.99, "gvs": 3.07}, {"p": "2026-03", "hvs": 11.2, "gvs": 4.56}, {"p": "2026-04", "hvs": 10.35, "gvs": 3.81}, {"p": "2026-05", "hvs": 7.6, "gvs": 2.95}, {"p": "2026-07", "hvs": 10.52, "gvs": 3.11}, {"p": "2026-08", "hvs": 9.62, "gvs": 3.18}], "odn": [{"p": "2021-02", "v": 571.5}, {"p": "2021-03", "v": 279.4}, {"p": "2021-04", "v": 245.3}, {"p": "2021-05", "v": 229.0}, {"p": "2021-06", "v": 150.0}, {"p": "2021-07", "v": 20.5}, {"p": "2021-08", "v": 157.3}, {"p": "2021-09", "v": 347.8}, {"p": "2021-10", "v": 298.9}, {"p": "2021-11", "v": 318.8}, {"p": "2021-12", "v": 380.3}, {"p": "2022-01", "v": 140.7}, {"p": "2022-02", "v": 307.9}, {"p": "2022-03", "v": 370.2}, {"p": "2022-04", "v": 422.6}, {"p": "2022-05", "v": 204.8}, {"p": "2022-06", "v": 36.1}, {"p": "2022-08", "v": 15.0}, {"p": "2022-09", "v": 287.0}, {"p": "2022-10", "v": 335.8}, {"p": "2022-11", "v": 332.3}, {"p": "2022-12", "v": 418.2}, {"p": "2023-02", "v": 434.2}, {"p": "2023-03", "v": 290.9}, {"p": "2023-04", "v": 209.3}, {"p": "2023-05", "v": 109.5}, {"p": "2023-06", "v": 204.4}, {"p": "2023-07", "v": 120.0}, {"p": "2023-08", "v": 154.2}, {"p": "2023-09", "v": 159.0}, {"p": "2023-10", "v": 289.0}, {"p": "2023-11", "v": 380.3}, {"p": "2023-12", "v": 654.8}, {"p": "2024-01", "v": 178.7}, {"p": "2024-02", "v": 366.4}, {"p": "2024-03", "v": 343.7}, {"p": "2024-04", "v": 8.9}, {"p": "2024-05", "v": 98.4}, {"p": "2024-06", "v": 41.3}, {"p": "2024-08", "v": 18.0}, {"p": "2024-09", "v": 11.6}, {"p": "2024-10", "v": 109.3}, {"p": "2024-11", "v": 120.2}, {"p": "2024-12", "v": 177.9}, {"p": "2025-01", "v": 174.6}, {"p": "2025-02", "v": 61.7}, {"p": "2025-03", "v": 214.2}, {"p": "2025-04", "v": 28.0}, {"p": "2025-05", "v": 100.9}, {"p": "2025-06", "v": 50.3}, {"p": "2025-07", "v": 271.2}, {"p": "2025-08", "v": 126.9}, {"p": "2025-09", "v": 101.3}, {"p": "2025-10", "v": 350.8}, {"p": "2025-11", "v": 176.1}, {"p": "2025-12", "v": 134.7}, {"p": "2026-01", "v": 402.1}, {"p": "2026-02", "v": 252.8}, {"p": "2026-03", "v": 256.4}, {"p": "2026-04", "v": 151.0}, {"p": "2026-05", "v": 72.8}, {"p": "2026-07", "v": 206.7}], "tariffs": [{"name": "Содержание", "unit": "₽/м²", "from": ["2020-09", 41.8151], "to": ["2026-08", 80.18], "x": 1.92, "cagr": 11.6, "series": [{"p": "2020-09", "v": 41.8151}, {"p": "2020-10", "v": 83.63}, {"p": "2020-11", "v": 83.63}, {"p": "2020-12", "v": 83.63}, {"p": "2021-01", "v": 83.63}, {"p": "2021-02", "v": 83.63}, {"p": "2021-03", "v": 83.63}, {"p": "2021-04", "v": 83.63}, {"p": "2021-05", "v": 83.63}, {"p": "2021-06", "v": 83.63}, {"p": "2021-07", "v": 83.63}, {"p": "2021-08", "v": 83.63}, {"p": "2021-09", "v": 83.63}, {"p": "2021-10", "v": 83.63}, {"p": "2021-11", "v": 83.63}, {"p": "2021-12", "v": 83.63}, {"p": "2022-01", "v": 83.63}, {"p": "2022-02", "v": 89.79}, {"p": "2022-03", "v": 89.79}, {"p": "2022-04", "v": 89.79}, {"p": "2022-05", "v": 89.79}, {"p": "2022-06", "v": 89.79}, {"p": "2022-07", "v": 89.79}, {"p": "2022-08", "v": 89.79}, {"p": "2022-09", "v": 89.79}, {"p": "2022-10", "v": 89.79}, {"p": "2022-11", "v": 89.79}, {"p": "2022-12", "v": 89.79}, {"p": "2023-01", "v": 92.94}, {"p": "2023-02", "v": 92.94}, {"p": "2023-03", "v": 92.94}, {"p": "2023-04", "v": 92.94}, {"p": "2023-05", "v": 92.94}, {"p": "2023-06", "v": 92.94}, {"p": "2023-07", "v": 92.94}, {"p": "2023-08", "v": 92.94}, {"p": "2023-09", "v": 92.94}, {"p": "2023-10", "v": 92.94}, {"p": "2023-11", "v": 92.94}, {"p": "2023-12", "v": 92.94}, {"p": "2024-01", "v": 92.94}, {"p": "2024-02", "v": 92.94}, {"p": "2024-03", "v": 90.17}, {"p": "2024-04", "v": 90.17}, {"p": "2024-05", "v": 90.17}, {"p": "2024-06", "v": 90.17}, {"p": "2024-07", "v": 103.32}, {"p": "2024-08", "v": 103.32}, {"p": "2024-09", "v": 103.32}, {"p": "2024-10", "v": 103.32}, {"p": "2024-11", "v": 103.32}, {"p": "2024-12", "v": 103.32}, {"p": "2025-01", "v": 103.32}, {"p": "2025-02", "v": 103.32}, {"p": "2025-03", "v": 103.32}, {"p": "2025-04", "v": 103.32}, {"p": "2025-05", "v": 103.32}, {"p": "2025-06", "v": 103.32}, {"p": "2025-07", "v": 103.32}, {"p": "2025-08", "v": 103.32}, {"p": "2025-09", "v": 103.32}, {"p": "2025-10", "v": 103.32}, {"p": "2025-11", "v": 103.32}, {"p": "2025-12", "v": 103.32}, {"p": "2026-01", "v": 103.32}, {"p": "2026-02", "v": 80.18}, {"p": "2026-03", "v": 80.18}, {"p": "2026-04", "v": 80.18}, {"p": "2026-05", "v": 80.18}, {"p": "2026-07", "v": 80.18}, {"p": "2026-08", "v": 80.18}], "note": null}, {"name": "Водоотведение", "unit": "₽/м³", "from": ["2020-12", 30.8997], "to": ["2026-08", 52.4799], "x": 1.7, "cagr": 9.8, "series": [{"p": "2020-12", "v": 30.8997}, {"p": "2021-01", "v": 30.8997}, {"p": "2021-02", "v": 30.8996}, {"p": "2021-03", "v": 30.9009}, {"p": "2021-04", "v": 30.8995}, {"p": "2021-05", "v": 30.8988}, {"p": "2021-06", "v": 30.8966}, {"p": "2021-07", "v": 32.0201}, {"p": "2021-08", "v": 32.0198}, {"p": "2021-09", "v": 32.0202}, {"p": "2021-10", "v": 32.0201}, {"p": "2021-11", "v": 32.0202}, {"p": "2021-12", "v": 32.02}, {"p": "2022-01", "v": 32.0199}, {"p": "2022-02", "v": 32.0197}, {"p": "2022-03", "v": 32.0204}, {"p": "2022-04", "v": 32.0198}, {"p": "2022-05", "v": 32.0199}, {"p": "2022-06", "v": 32.0203}, {"p": "2022-07", "v": 35.5299}, {"p": "2022-08", "v": 35.5294}, {"p": "2022-09", "v": 35.5298}, {"p": "2022-10", "v": 35.5302}, {"p": "2022-11", "v": 35.5303}, {"p": "2022-12", "v": 39.9703}, {"p": "2023-01", "v": 39.9708}, {"p": "2023-02", "v": 39.9696}, {"p": "2023-03", "v": 39.9697}, {"p": "2023-04", "v": 39.9704}, {"p": "2023-05", "v": 39.9695}, {"p": "2023-06", "v": 39.9694}, {"p": "2023-07", "v": 39.9701}, {"p": "2023-08", "v": 39.9706}, {"p": "2023-09", "v": 39.9698}, {"p": "2023-10", "v": 39.9704}, {"p": "2023-11", "v": 39.9697}, {"p": "2023-12", "v": 39.9696}, {"p": "2024-01", "v": 39.9704}, {"p": "2024-02", "v": 39.9702}, {"p": "2024-03", "v": 39.9698}, {"p": "2024-04", "v": 39.97}, {"p": "2024-05", "v": 39.9699}, {"p": "2024-06", "v": 39.9703}, {"p": "2024-07", "v": 45.9096}, {"p": "2024-08", "v": 45.9101}, {"p": "2024-09", "v": 45.91}, {"p": "2024-10", "v": 45.91}, {"p": "2024-11", "v": 45.9097}, {"p": "2024-12", "v": 45.9097}, {"p": "2025-01", "v": 45.9098}, {"p": "2025-02", "v": 45.9102}, {"p": "2025-03", "v": 45.9099}, {"p": "2025-04", "v": 45.9102}, {"p": "2025-05", "v": 45.9128}, {"p": "2025-06", "v": 45.9101}, {"p": "2025-07", "v": 51.6203}, {"p": "2025-08", "v": 51.6198}, {"p": "2025-09", "v": 51.62}, {"p": "2025-10", "v": 51.6197}, {"p": "2025-11", "v": 51.6197}, {"p": "2025-12", "v": 51.62}, {"p": "2026-01", "v": 52.48}, {"p": "2026-02", "v": 52.4802}, {"p": "2026-03", "v": 52.48}, {"p": "2026-04", "v": 52.4799}, {"p": "2026-05", "v": 52.4798}, {"p": "2026-07", "v": 52.4799}, {"p": "2026-08", "v": 52.4799}], "note": null}, {"name": "ГВС", "unit": "₽/Гкал", "from": ["2022-01", 2033.8433], "to": ["2026-08", 3035.5052], "x": 1.49, "cagr": 9.1, "series": [{"p": "2022-01", "v": 2033.8433}, {"p": "2022-02", "v": 2033.834}, {"p": "2022-03", "v": 2033.8372}, {"p": "2022-04", "v": 2033.8308}, {"p": "2022-05", "v": 2033.8365}, {"p": "2022-06", "v": 2033.836}, {"p": "2022-07", "v": 2143.6633}, {"p": "2022-08", "v": 2143.6664}, {"p": "2022-09", "v": 2143.666}, {"p": "2022-10", "v": 2143.663}, {"p": "2022-11", "v": 2143.6937}, {"p": "2022-12", "v": 2325.8792}, {"p": "2023-01", "v": 2325.8814}, {"p": "2023-02", "v": 2325.8874}, {"p": "2023-03", "v": 2325.8712}, {"p": "2023-04", "v": 2325.8607}, {"p": "2023-05", "v": 2325.8408}, {"p": "2023-06", "v": 2326.0386}, {"p": "2023-07", "v": 2324.7573}, {"p": "2023-08", "v": 2325.3292}, {"p": "2023-09", "v": 2326.1923}, {"p": "2023-10", "v": 2325.89}, {"p": "2023-11", "v": 2325.8982}, {"p": "2023-12", "v": 2325.8953}, {"p": "2024-01", "v": 2325.8929}, {"p": "2024-02", "v": 2325.873}, {"p": "2024-03", "v": 2325.8836}, {"p": "2024-04", "v": 2325.8664}, {"p": "2024-05", "v": 2325.8637}, {"p": "2024-06", "v": 2325.9126}, {"p": "2024-07", "v": 2568.7352}, {"p": "2024-08", "v": 2569.2867}, {"p": "2024-09", "v": 2569.1671}, {"p": "2024-10", "v": 2569.152}, {"p": "2024-11", "v": 2569.1729}, {"p": "2024-12", "v": 2569.1506}, {"p": "2025-01", "v": 2569.161}, {"p": "2025-02", "v": 2569.1715}, {"p": "2025-03", "v": 2569.1708}, {"p": "2025-04", "v": 2569.1584}, {"p": "2025-05", "v": 2569.2029}, {"p": "2025-06", "v": 2569.0771}, {"p": "2025-07", "v": 2985.3612}, {"p": "2025-08", "v": 2985.1206}, {"p": "2025-09", "v": 2985.3846}, {"p": "2025-10", "v": 2985.3549}, {"p": "2025-11", "v": 2985.3909}, {"p": "2025-12", "v": 2985.3846}, {"p": "2026-01", "v": 2985.3801}, {"p": "2026-02", "v": 3035.1149}, {"p": "2026-03", "v": 3035.1163}, {"p": "2026-04", "v": 3035.1439}, {"p": "2026-05", "v": 3035.1319}, {"p": "2026-07", "v": 3035.297}, {"p": "2026-08", "v": 3035.5052}], "note": "ряд с 01.2022 — раньше УК считала по другой базе"}, {"name": "Отопление", "unit": "₽/Гкал", "from": ["2023-02", 2325.8789], "to": ["2026-04", 3035.13], "x": 1.3, "cagr": 8.8, "series": [{"p": "2023-02", "v": 2325.8789}, {"p": "2023-03", "v": 2325.8859}, {"p": "2023-04", "v": 2325.8667}, {"p": "2023-10", "v": 2325.88}, {"p": "2023-11", "v": 2325.8793}, {"p": "2023-12", "v": 2325.8793}, {"p": "2024-01", "v": 2325.88}, {"p": "2024-02", "v": 2325.8786}, {"p": "2024-03", "v": 2325.8824}, {"p": "2024-04", "v": 2325.8857}, {"p": "2024-10", "v": 2569.1579}, {"p": "2024-11", "v": 2569.1583}, {"p": "2024-12", "v": 2569.1609}, {"p": "2025-01", "v": 2569.16}, {"p": "2025-02", "v": 2569.16}, {"p": "2025-03", "v": 2569.16}, {"p": "2025-04", "v": 2569.16}, {"p": "2025-09", "v": 2985.38}, {"p": "2025-10", "v": 2985.38}, {"p": "2026-01", "v": 2985.37}, {"p": "2026-02", "v": 3035.13}, {"p": "2026-04", "v": 3035.13}], "note": null}, {"name": "ХВС", "unit": "₽/м³", "from": ["2020-12", 42.3005], "to": ["2026-08", 66.8697], "x": 1.58, "cagr": 8.4, "series": [{"p": "2020-12", "v": 42.3005}, {"p": "2021-01", "v": 42.3008}, {"p": "2021-02", "v": 42.2986}, {"p": "2021-03", "v": 42.2982}, {"p": "2021-04", "v": 42.2979}, {"p": "2021-05", "v": 42.2994}, {"p": "2021-06", "v": 42.2931}, {"p": "2021-07", "v": 43.0372}, {"p": "2021-08", "v": 43.5709}, {"p": "2021-09", "v": 43.5696}, {"p": "2021-10", "v": 43.5697}, {"p": "2021-11", "v": 43.5701}, {"p": "2021-12", "v": 43.5702}, {"p": "2022-01", "v": 43.5698}, {"p": "2022-02", "v": 43.5698}, {"p": "2022-03", "v": 43.5698}, {"p": "2022-04", "v": 43.5704}, {"p": "2022-05", "v": 43.5697}, {"p": "2022-06", "v": 43.5704}, {"p": "2022-07", "v": 45.8797}, {"p": "2022-08", "v": 45.8797}, {"p": "2022-09", "v": 45.8804}, {"p": "2022-10", "v": 45.8802}, {"p": "2022-11", "v": 45.8803}, {"p": "2022-12", "v": 50.9304}, {"p": "2023-01", "v": 50.9277}, {"p": "2023-02", "v": 50.9303}, {"p": "2023-03", "v": 50.9296}, {"p": "2023-04", "v": 50.9298}, {"p": "2023-05", "v": 50.9305}, {"p": "2023-06", "v": 50.9309}, {"p": "2023-07", "v": 50.9292}, {"p": "2023-08", "v": 50.9306}, {"p": "2023-09", "v": 50.9302}, {"p": "2023-10", "v": 50.9301}, {"p": "2023-11", "v": 50.9302}, {"p": "2023-12", "v": 50.9303}, {"p": "2024-01", "v": 50.9301}, {"p": "2024-02", "v": 50.9301}, {"p": "2024-03", "v": 50.9305}, {"p": "2024-04", "v": 50.9301}, {"p": "2024-05", "v": 50.9298}, {"p": "2024-06", "v": 50.9298}, {"p": "2024-07", "v": 59.8}, {"p": "2024-08", "v": 59.7999}, {"p": "2024-09", "v": 59.8}, {"p": "2024-10", "v": 59.8}, {"p": "2024-11", "v": 59.8}, {"p": "2024-12", "v": 59.7998}, {"p": "2025-01", "v": 59.7998}, {"p": "2025-02", "v": 59.7998}, {"p": "2025-03", "v": 59.8003}, {"p": "2025-04", "v": 59.8}, {"p": "2025-05", "v": 59.8016}, {"p": "2025-06", "v": 59.7998}, {"p": "2025-07", "v": 65.7695}, {"p": "2025-08", "v": 65.7705}, {"p": "2025-09", "v": 65.7698}, {"p": "2025-10", "v": 65.7698}, {"p": "2025-11", "v": 65.7701}, {"p": "2025-12", "v": 65.7701}, {"p": "2026-01", "v": 66.8697}, {"p": "2026-02", "v": 66.8699}, {"p": "2026-03", "v": 66.8696}, {"p": "2026-04", "v": 66.8696}, {"p": "2026-05", "v": 66.8697}, {"p": "2026-07", "v": 66.8698}, {"p": "2026-08", "v": 66.8697}], "note": null}, {"name": "Электроэнергия", "unit": "₽/кВт·ч", "from": ["2021-02", 4.87], "to": ["2026-07", 7.28], "x": 1.49, "cagr": 7.7, "series": [{"p": "2021-02", "v": 4.87}, {"p": "2021-03", "v": 4.87}, {"p": "2021-04", "v": 4.87}, {"p": "2021-05", "v": 4.87}, {"p": "2021-06", "v": 4.87}, {"p": "2021-07", "v": 5.1501}, {"p": "2021-08", "v": 5.15}, {"p": "2021-09", "v": 5.15}, {"p": "2021-10", "v": 5.15}, {"p": "2021-11", "v": 5.15}, {"p": "2021-12", "v": 5.15}, {"p": "2022-01", "v": 5.1499}, {"p": "2022-02", "v": 5.15}, {"p": "2022-03", "v": 5.15}, {"p": "2022-04", "v": 5.15}, {"p": "2022-05", "v": 5.15}, {"p": "2022-06", "v": 5.1502}, {"p": "2022-08", "v": 5.4293}, {"p": "2022-09", "v": 5.43}, {"p": "2022-10", "v": 5.43}, {"p": "2022-11", "v": 5.43}, {"p": "2022-12", "v": 5.66}, {"p": "2023-02", "v": 5.66}, {"p": "2023-03", "v": 5.66}, {"p": "2023-04", "v": 5.66}, {"p": "2023-05", "v": 5.66}, {"p": "2023-06", "v": 5.66}, {"p": "2023-07", "v": 5.66}, {"p": "2023-08", "v": 5.66}, {"p": "2023-09", "v": 5.66}, {"p": "2023-10", "v": 5.66}, {"p": "2023-11", "v": 5.66}, {"p": "2023-12", "v": 5.66}, {"p": "2024-01", "v": 5.66}, {"p": "2024-02", "v": 5.66}, {"p": "2024-03", "v": 5.66}, {"p": "2024-04", "v": 5.66}, {"p": "2024-05", "v": 5.66}, {"p": "2024-06", "v": 5.6599}, {"p": "2024-08", "v": 6.1498}, {"p": "2024-09", "v": 6.1498}, {"p": "2024-10", "v": 6.15}, {"p": "2024-11", "v": 6.15}, {"p": "2024-12", "v": 6.15}, {"p": "2025-01", "v": 6.15}, {"p": "2025-02", "v": 6.15}, {"p": "2025-03", "v": 6.15}, {"p": "2025-04", "v": 6.1499}, {"p": "2025-05", "v": 6.15}, {"p": "2025-06", "v": 6.1499}, {"p": "2025-07", "v": 7.16}, {"p": "2025-08", "v": 7.16}, {"p": "2025-09", "v": 7.16}, {"p": "2025-10", "v": 7.16}, {"p": "2025-11", "v": 7.16}, {"p": "2025-12", "v": 7.16}, {"p": "2026-01", "v": 7.28}, {"p": "2026-02", "v": 7.28}, {"p": "2026-03", "v": 7.28}, {"p": "2026-04", "v": 7.28}, {"p": "2026-05", "v": 7.28}, {"p": "2026-07", "v": 7.28}], "note": null}, {"name": "Вывоз ТКО", "unit": "₽/м³", "from": ["2022-01", 839.2204], "to": ["2026-07", 972.6994], "x": 1.16, "cagr": 3.3, "series": [{"p": "2022-01", "v": 839.2204}, {"p": "2022-02", "v": 839.2204}, {"p": "2022-03", "v": 839.2204}, {"p": "2022-04", "v": 839.2234}, {"p": "2022-05", "v": 839.2204}, {"p": "2022-06", "v": 839.2204}, {"p": "2022-07", "v": 839.2204}, {"p": "2022-08", "v": 839.2204}, {"p": "2022-09", "v": 839.2204}, {"p": "2022-10", "v": 839.2386}, {"p": "2022-11", "v": 839.2386}, {"p": "2022-12", "v": 841.7866}, {"p": "2023-01", "v": 841.7866}, {"p": "2023-02", "v": 841.7866}, {"p": "2023-03", "v": 841.7866}, {"p": "2023-04", "v": 841.7866}, {"p": "2023-05", "v": 841.774}, {"p": "2023-06", "v": 841.774}, {"p": "2023-07", "v": 841.774}, {"p": "2023-08", "v": 841.774}, {"p": "2023-09", "v": 841.774}, {"p": "2023-10", "v": 841.7811}, {"p": "2023-11", "v": 841.7811}, {"p": "2023-12", "v": 841.7811}, {"p": "2024-01", "v": 841.7811}, {"p": "2024-02", "v": 841.7775}, {"p": "2024-03", "v": 841.7775}, {"p": "2024-04", "v": 841.7775}, {"p": "2024-05", "v": 841.7719}, {"p": "2024-06", "v": 841.7741}, {"p": "2024-07", "v": 846.4405}, {"p": "2024-08", "v": 846.4345}, {"p": "2024-09", "v": 846.4345}, {"p": "2024-10", "v": 846.426}, {"p": "2024-11", "v": 846.4302}, {"p": "2024-12", "v": 846.4302}, {"p": "2025-01", "v": 846.4325}, {"p": "2025-02", "v": 846.4325}, {"p": "2025-03", "v": 846.4325}, {"p": "2025-04", "v": 846.4325}, {"p": "2025-05", "v": 846.4325}, {"p": "2025-06", "v": 846.4325}, {"p": "2025-07", "v": 972.6968}, {"p": "2025-08", "v": 972.6968}, {"p": "2025-09", "v": 972.6968}, {"p": "2025-10", "v": 972.6968}, {"p": "2025-11", "v": 972.6968}, {"p": "2025-12", "v": 972.6994}, {"p": "2026-01", "v": 972.6994}, {"p": "2026-02", "v": 972.6994}, {"p": "2026-03", "v": 972.6994}, {"p": "2026-04", "v": 972.6994}, {"p": "2026-05", "v": 972.6994}, {"p": "2026-07", "v": 972.6994}], "note": "ряд с 01.2022 — раньше УК считала по другой базе"}, {"name": "Безопасность МКД", "unit": "₽/м²", "from": ["2026-02", 50.74], "to": ["2026-08", 50.74], "x": 1.0, "cagr": null, "series": [{"p": "2026-02", "v": 50.74}, {"p": "2026-03", "v": 50.74}, {"p": "2026-04", "v": 50.74}, {"p": "2026-05", "v": 50.74}, {"p": "2026-07", "v": 50.74}, {"p": "2026-08", "v": 50.74}], "note": "новая услуга с 02.2026"}], "meta": {"debt_uk": 77134.95, "debt_uk_kv": 70478.63, "debt_uk_mm": 6656.32, "debt_my": 24319.9, "debt_my_kv": 22349.67, "debt_my_mm": 1970.23, "gap": 52815.05, "my_last_date": "31.08.2026", "my_last_sum": 52815.05, "uk_last_date": "13.07.2026", "uk_last_sum": 59692.04, "last_receipt": "08.2026", "printed": "02.09.2026", "today": "05.09.2026", "card_date": "09.04.2024", "card_days": 879, "total_nach": 1667058.21, "total_pay": 1642738.31, "periods": 133, "receipts": 131, "payments": 57}};
+const M = D.meta;
+const $ = s => document.querySelector(s);
+const fmt = (n,d=2)=> n==null?'—':n.toLocaleString('ru-RU',{minimumFractionDigits:d,maximumFractionDigits:d});
+const f0 = n => Math.round(n).toLocaleString('ru-RU');
+const MON=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+const plab = p => MON[+p.slice(5)-1]+' '+p.slice(2,4);
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+
+/* ---------- шапка ---------- */
+$('#asof').textContent = 'собрано '+M.today;
+const LR = D.money[D.money.length-1];
+const PAY = {d:'31 августа 2026', kv:48128.96, mm:4686.09, sum:M.my_last_sum};
+const PREV= {d:'13.07.2026', sum:M.uk_last_sum};
+
+$('#hero').innerHTML = `
+ <div class="eq">
+  <div class="eq-cell">
+    <div class="eq-lab">Долг по квитанции УК</div>
+    <div class="eq-val">${fmt(M.debt_uk)} ₽</div>
+    <div class="eq-sub">квитанция за август 2026</div>
+  </div>
+  <div class="eq-op">−</div>
+  <div class="eq-cell">
+    <div class="eq-lab" data-op="−">Платёж в пути</div>
+    <div class="eq-val">${fmt(M.gap)} ₽</div>
+    <div class="eq-sub">отправлен 31.08, ещё не зачтён</div>
+  </div>
+  <div class="eq-op">=</div>
+  <div class="eq-cell now">
+    <div class="eq-lab" data-op="=">Фактически к оплате</div>
+    <div class="eq-val">${fmt(M.debt_my)} ₽</div>
+    <div class="eq-sub">это начисления за август</div>
+  </div>
+ </div>
+ <p class="hero-note">Вы заплатили <b>31 августа</b>, УК получила деньги уже в сентябре — в августовскую квитанцию они не попали.
+  Она увидит их в сентябрьской, и цифры сойдутся. Чтобы так не выходило, <b>платить до 25 числа</b>.</p>`;
+
+$('#events').innerHTML = `
+ <div class="ev">
+   <div class="ev-h"><span class="ev-t">Последняя квитанция</span><span class="ev-d">за август 2026</span></div>
+   <div class="ev-v">${fmt(LR.nach)} ₽</div>
+   <div class="ev-split"><span>Квартира <b>${fmt(LR.kv)}</b></span><span>Паркинг <b>${fmt(LR.mm)}</b></span></div>
+   <div class="ev-f">выставлена ${M.printed} · начислено за месяц, без прошлого долга</div>
+ </div>
+ <div class="ev">
+   <div class="ev-h"><span class="ev-t">Последний платёж</span><span class="ev-d">${PAY.d}</span></div>
+   <div class="ev-v">${fmt(PAY.sum)} ₽</div>
+   <div class="ev-split"><span>Квартира <b>${fmt(PAY.kv)}</b></span><span>Паркинг <b>${fmt(PAY.mm)}</b></span></div>
+   <div class="ev-f">Райффайзенбанк · до этого ${PREV.d} на ${fmt(PREV.sum)} ₽</div>
+ </div>`;
+
+/* ---------- SVG утилиты ---------- */
+const NS='http://www.w3.org/2000/svg';
+function mk(w,h){return `<svg viewBox="0 0 ${w} ${h}" role="img">`}
+function line(pts){return pts.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' ')}
+function txt(x,y,s,o={}){return `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" fill="${o.fill||'var(--muted)'}"
+  font-size="${o.size||10}" font-family="${o.mono?'var(--mono)':'var(--sans)'}"
+  font-weight="${o.w||400}" text-anchor="${o.a||'start'}"
+  style="font-variant-numeric:tabular-nums">${esc(s)}</text>`}
+
+const LET='ЯФМАМИИАСОНД';
+const seasonOf=m=>(m===12||m<3)?'зима':m<6?'весна':m<9?'лето':'осень';
+function seasonBg(data,PL,bw,yTop,yBot){
+  let s='',i0=0;
+  data.forEach((d,i)=>{const cur=seasonOf(+d.p.slice(5));
+    const nxt=i<data.length-1?seasonOf(+data[i+1].p.slice(5)):null;
+    if(cur!==nxt){const x=PL+i0*bw,w=(i-i0+1)*bw;
+      if(((i0/3)|0)%2===1)s+=`<rect x="${x.toFixed(1)}" y="${yTop.toFixed(1)}" width="${w.toFixed(1)}" height="${(yBot-yTop).toFixed(1)}" fill="var(--ink)" opacity=".032"/>`;
+      i0=i+1}});
+  return s}
+function axisMS(data,PL,bw,axY,W,PR){
+  let s=`<line x1="${PL}" y1="${axY.toFixed(1)}" x2="${W-PR}" y2="${axY.toFixed(1)}" stroke="var(--rule)" stroke-width="1"/>`,i0=0;
+  data.forEach((d,i)=>{const m=+d.p.slice(5),x=PL+i*bw+bw/2;
+    s+=txt(x,axY+14,LET[m-1],{a:'middle',size:10,w:600,fill:'var(--ink-2)'});
+    if(m===1||i===0)s+=txt(x,axY+46,d.p.slice(0,4),{a:'middle',size:9.5,mono:1,fill:'var(--muted)'})});
+  data.forEach((d,i)=>{const cur=seasonOf(+d.p.slice(5));
+    const nxt=i<data.length-1?seasonOf(+data[i+1].p.slice(5)):null;
+    if(cur!==nxt){const x=PL+i0*bw,w=(i-i0+1)*bw;
+      s+=`<rect x="${(x+1).toFixed(1)}" y="${(axY+19).toFixed(1)}" width="${(w-2).toFixed(1)}" height="15" fill="var(--ink)" opacity=".06" rx="2"/>`;
+      s+=txt(x+w/2,axY+30,cur,{a:'middle',size:9.5,fill:'var(--ink-2)',w:600});
+      i0=i+1}});
+  return s}
+
+/* tooltip */
+const TT=$('#tt');
+function tipShow(html,e){TT.innerHTML=html;TT.classList.add('on');
+  let x=e.clientX+14,y=e.clientY+14;
+  const r=TT.getBoundingClientRect();
+  if(x+r.width>innerWidth-8)x=e.clientX-r.width-14;
+  if(y+r.height>innerHeight-8)y=e.clientY-r.height-14;
+  TT.style.left=x+'px';TT.style.top=y+'px'}
+function tipHide(){TT.classList.remove('on')}
+
+/* ---------- 1. деньги ---------- */
+(function(){
+  const all=D.money; let cn=0,cp=0;
+  const full=all.map(d=>{cn+=d.nach;cp+=d.pay;return {...d,real:+(cn-cp).toFixed(2)}});
+  const data=full.slice(-24);
+  const W=700,PL=46,PR=38,PT=16,AX=54,GP=22;
+  const HA=84,HB=84,HC=64;
+  const yA=PT, yB=yA+HA+GP, yC=yB+HB+GP, axY=yC+HC;
+  const H=axY+AX;
+  const iw=W-PL-PR, bw=iw/data.length;
+  const nice=(m,st)=>Math.ceil(m/st)*st;
+  const topA=nice(Math.max(...data.map(d=>d.nach)),25000);
+  const topB=nice(Math.max(...data.map(d=>d.pay)),25000);
+  const topC=nice(Math.max(...data.map(d=>d.real)),50000);
+  const sc=(v,y0,hh,top)=>y0+hh-(v/top)*hh;
+  let s=mk(W,H);
+
+  s+=seasonBg(data,PL,bw,PT-6,axY);
+
+  function panel(y0,hh,top,label){
+    s+=txt(PL,y0-5,label,{size:9,fill:'var(--muted)'});
+    [0,top/2,top].forEach(v=>{const yy=sc(v,y0,hh,top);
+      s+=`<line x1="${PL}" y1="${yy.toFixed(1)}" x2="${W-PR}" y2="${yy.toFixed(1)}" stroke="var(--grid)" stroke-width="1"/>`;
+      s+=txt(PL-6,yy+3,v?f0(v/1000)+'к':'0',{a:'end',mono:1,size:9.5})});
+  }
+  /* A — начислено */
+  panel(yA,HA,topA,'Начислено за месяц, ₽');
+  data.forEach((d,i)=>{const x=PL+i*bw+bw*0.18,w=bw*0.64,yy=sc(d.nach,yA,HA,topA);
+    s+=`<rect x="${x.toFixed(1)}" y="${yy.toFixed(1)}" width="${w.toFixed(1)}" height="${(yA+HA-yy).toFixed(1)}" fill="var(--slate)" rx="2"/>`;
+    s+=txt(x+w/2,yy-4,f0(d.nach/1000),{a:'middle',size:9.5,mono:1,w:600,fill:'var(--ink-2)'})});
+  /* B — оплачено */
+  panel(yB,HB,topB,'Мои платежи, ₽');
+  data.forEach((d,i)=>{if(!d.pay)return;const x=PL+i*bw+bw*0.18,w=bw*0.64,yy=sc(d.pay,yB,HB,topB);
+    s+=`<rect x="${x.toFixed(1)}" y="${yy.toFixed(1)}" width="${w.toFixed(1)}" height="${(yB+HB-yy).toFixed(1)}" fill="var(--s-blue)" rx="2"/>`;
+    s+=txt(x+w/2,yy-4,f0(d.pay/1000),{a:'middle',size:9.5,mono:1,w:600,fill:'var(--s-blue)'})});
+  /* C — долг */
+  panel(yC,HC,topC,'Мой реальный долг — начислено минус оплачено, ₽');
+  const dp=data.map((d,i)=>[PL+i*bw+bw/2,sc(d.real,yC,HC,topC)]);
+  s+=`<path d="${line(dp)} L ${dp[dp.length-1][0].toFixed(1)} ${(yC+HC).toFixed(1)} L ${dp[0][0].toFixed(1)} ${(yC+HC).toFixed(1)} Z" fill="var(--s-rust)" opacity=".10"/>`;
+  s+=`<path d="${line(dp)}" fill="none" stroke="var(--s-rust)" stroke-width="2" stroke-linejoin="round"/>`;
+  const lp=dp[dp.length-1], lv=data[data.length-1].real;
+  s+=`<circle cx="${lp[0].toFixed(1)}" cy="${lp[1].toFixed(1)}" r="3.6" fill="var(--s-rust)" stroke="var(--surface)" stroke-width="2"/>`;
+  s+=txt(lp[0]+7,lp[1]+4,f0(lv/1000)+'к',{a:'start',size:11.5,mono:1,w:600,fill:'var(--s-rust)'});
+
+  s+=axisMS(data,PL,bw,axY,W,PR);
+  data.forEach((d,i)=>{s+=`<rect class="hz" data-i="${i}" x="${(PL+i*bw).toFixed(1)}" y="${PT-6}" width="${bw.toFixed(1)}" height="${(axY-PT+6).toFixed(1)}" fill="transparent"/>`});
+  s+='</svg>';
+  const host=$('#c-money'); host.innerHTML=s;
+  host.querySelectorAll('.hz').forEach(r=>{
+    r.addEventListener('mousemove',e=>{const d=data[+r.dataset.i];
+      tipShow(`<div class="tp">${plab(d.p)}</div>
+      <div class="row"><span>Начислено</span><span>${fmt(d.nach)}</span></div>
+      <div class="row"><span>Оплачено</span><span>${d.pay?fmt(d.pay):'—'}</span></div>
+      <div class="row"><span>Мой долг</span><span>${fmt(d.real)}</span></div>
+      <div class="row"><span>Долг по УК</span><span>${fmt(d.debt)}</span></div>`,e)});
+    r.addEventListener('mouseleave',tipHide)});
+
+  $('#money-side').innerHTML=`
+    <div class="stat"><div class="stat-l">Начислено за всё время</div>
+      <div class="stat-v">${f0(M.total_nach)} ₽</div>
+      <div class="stat-s">09.2020 — 08.2026, ${M.periods} месяца</div></div>
+    <div class="stat"><div class="stat-l">Оплачено за всё время</div>
+      <div class="stat-v">${f0(M.total_pay)} ₽</div>
+      <div class="stat-s">${M.payments} платежей</div></div>
+    <div class="stat-note">Разница <b>${fmt(M.debt_my)} ₽</b> — это и есть текущий долг</div>`;
+
+  let t='<table><thead><tr><th>Месяц</th><th class="r">Квартира</th><th class="r">Паркинг</th><th class="r">Оплачено</th><th class="r">Долг по УК</th></tr></thead><tbody>';
+  all.slice(-24).reverse().forEach(d=>{t+=`<tr><td class="num">${plab(d.p)}</td><td class="r num">${fmt(d.kv)}</td><td class="r num">${fmt(d.mm)}</td><td class="r num">${d.pay?fmt(d.pay):'—'}</td><td class="r num">${fmt(d.debt)}</td></tr>`});
+  $('#t-money').innerHTML=t+'</tbody></table>';
+})();
+
+/* ---------- 2. отопление ---------- */
+(function(){
+  const S=D.heat_seasons, order=[9,10,11,12,1,2,3,4,5];
+  const W=330,H=185,PL=30,PR=12,PT=14,PB=26;
+  const iw=W-PL-PR, ih=H-PT-PB;
+  const max=Math.max(...S.flatMap(s=>Object.values(s.m)),1);
+  const top=Math.ceil(max*2)/2;
+  const x=i=>PL+i*(iw/(order.length-1)), y=v=>PT+ih-(v/top)*ih;
+  const cols=S.map((se,i)=> i===0&&Object.keys(se.m).length<6 ? 'var(--dim)' : ['var(--k1)','var(--k2)','var(--k3)'][Math.max(0,i-(S.length-3))]);
+  let s=mk(W,H);
+  for(let v=0;v<=top;v+=1){s+=`<line x1="${PL}" y1="${y(v).toFixed(1)}" x2="${W-PR}" y2="${y(v).toFixed(1)}" stroke="var(--grid)" stroke-width="1"/>`;
+    s+=txt(PL-6,y(v)+3,v,{a:'end',mono:1})}
+  order.forEach((m,i)=>s+=txt(x(i),H-9,MON[m-1],{a:'middle',size:9.5}));
+  S.forEach((se,si)=>{
+    const pts=order.map((m,i)=>[x(i),y(se.m[String(m)]||0)]);
+    const dim=cols[si]==='var(--dim)';
+    s+=`<path d="${line(pts)}" fill="none" stroke="${cols[si]}" stroke-width="${dim?1.5:2.2}" ${dim?'stroke-dasharray="3 3"':''} stroke-linejoin="round" stroke-linecap="round"/>`;
+
+    pts.forEach((p,i)=>{const v=se.m[String(order[i])]||0;
+      if(v>0)s+=`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.6" fill="${cols[si]}" stroke="var(--surface)" stroke-width="1.5"/>`});
+  });
+  s+='</svg>';
+  let t='<table><thead><tr><th>Сезон</th>'+order.map(m=>`<th class="r">${MON[m-1]}</th>`).join('')+'<th class="r">Σ</th></tr></thead><tbody>';
+  S.forEach(se=>{t+=`<tr><td class="svc">${se.season}</td>`+order.map(m=>`<td class="r num">${se.m[String(m)]?fmt(se.m[String(m)],1):'—'}</td>`).join('')+`<td class="r num" style="font-weight:600">${se.total}</td></tr>`});
+  $('#c-heat').innerHTML=s+`<details><summary>Показать таблицей, Гкал</summary><div class="scroll">${t}</tbody></table></div></details>`;
+  $('#l-heat').innerHTML=S.map((se,i)=>`<span><i style="background:${cols[i]}"></i>${se.season} · <b class="num">${se.total}</b> Гкал${i===0&&Object.keys(se.m).length<6?' <span style="color:var(--muted)">(неполный)</span>':''}</span>`).join('');
+})();
+
+/* ---------- 3. вода ---------- */
+(function(){
+  const months=D.money.slice(-24).map(d=>d.p);
+  const map={}; D.water.forEach(d=>map[d.p]=d);
+  const data=months.map(p=>({p,...(map[p]||{})}));
+  const W=560,H=214,PL=34,PR=30,PT=16,AX=54;
+  const ih=H-PT-AX, bw=(W-PL-PR)/data.length, axY=PT+ih;
+  const top=Math.ceil(Math.max(...data.filter(d=>d.hvs!=null).map(d=>Math.max(d.hvs,d.gvs)))/2)*2;
+  const x=i=>PL+i*bw+bw/2, y=v=>PT+ih-(v/top)*ih;
+  let s=mk(W,H);
+  s+=seasonBg(data,PL,bw,PT,axY);
+  for(let v=0;v<=top;v+=4){s+=`<line x1="${PL}" y1="${y(v).toFixed(1)}" x2="${W-PR}" y2="${y(v).toFixed(1)}" stroke="var(--grid)" stroke-width="1"/>`;
+    s+=txt(PL-6,y(v)+3,v,{a:'end',mono:1,size:9.5})}
+  [['hvs','var(--s-blue)','ХВС'],['gvs','var(--s-rust)','ГВС']].forEach(([k,c,nm])=>{
+    let seg=[],last=null;
+    data.forEach((d,i)=>{ if(d[k]==null){if(seg.length>1)s+=`<path d="${line(seg)}" fill="none" stroke="${c}" stroke-width="2" stroke-linejoin="round"/>`;seg=[]}
+      else {seg.push([x(i),y(d[k])]);last=[x(i),y(d[k])]}});
+    if(seg.length>1)s+=`<path d="${line(seg)}" fill="none" stroke="${c}" stroke-width="2" stroke-linejoin="round"/>`;
+    if(last)s+=txt(W-PR+4,last[1]+3.5,nm,{fill:c,w:600,size:10});
+  });
+  data.forEach((d,i)=>{ if(d.hvs!=null&&d.hvs+d.gvs<6){
+    s+=`<circle cx="${x(i).toFixed(1)}" cy="${y(d.hvs).toFixed(1)}" r="4.5" fill="none" stroke="var(--crit)" stroke-width="1.8"/>`}});
+  s+=axisMS(data,PL,bw,axY,W,PR);
+  data.forEach((d,i)=>{s+=`<rect class="hw" data-i="${i}" x="${(PL+i*bw).toFixed(1)}" y="${PT}" width="${bw.toFixed(1)}" height="${ih}" fill="transparent"/>`});
+  s+='</svg>';
+  const host=$('#c-water');host.innerHTML=s;
+  host.querySelectorAll('.hw').forEach(r=>{
+    r.addEventListener('mousemove',e=>{const d=data[+r.dataset.i];
+      tipShow(`<div class="tp">${plab(d.p)}</div>`+(d.hvs==null?'<div class="row"><span>квитанции нет</span><span></span></div>':
+      `<div class="row"><span>ХВС</span><span>${fmt(d.hvs)} м³</span></div>
+       <div class="row"><span>ГВС</span><span>${fmt(d.gvs)} м³</span></div>`),e)});
+    r.addEventListener('mouseleave',tipHide)});
+})();
+
+/* ---------- 4. ОДН электроэнергия ---------- */
+(function(){
+  const months=D.money.slice(-24).map(d=>d.p);
+  const map={}; D.odn.forEach(d=>map[d.p]=d.v);
+  const data=months.map(p=>({p,v:map[p]}));
+  const W=1040,H=222,PL=44,PR=16,PT=20,AX=54;
+  const ih=H-PT-AX, bw=(W-PL-PR)/data.length, axY=PT+ih;
+  const top=Math.ceil(Math.max(...data.filter(d=>d.v!=null).map(d=>d.v))/100)*100;
+  const y=v=>PT+ih-(v/top)*ih;
+  let s=mk(W,H);
+  s+=seasonBg(data,PL,bw,PT,axY);
+  for(let v=0;v<=top;v+=200){s+=`<line x1="${PL}" y1="${y(v).toFixed(1)}" x2="${W-PR}" y2="${y(v).toFixed(1)}" stroke="var(--grid)" stroke-width="1"/>`;
+    s+=txt(PL-6,y(v)+3,v,{a:'end',mono:1,size:9.5})}
+  data.forEach((d,i)=>{const x=PL+i*bw+bw*0.2,w=bw*0.6;
+    if(d.v==null){s+=`<rect x="${x.toFixed(1)}" y="${(axY-5).toFixed(1)}" width="${w.toFixed(1)}" height="5" fill="var(--crit)"/>`}
+    else{s+=`<rect x="${x.toFixed(1)}" y="${y(d.v).toFixed(1)}" width="${w.toFixed(1)}" height="${(axY-y(d.v)).toFixed(1)}" fill="var(--s-brass)" rx="2"/>`;
+      s+=txt(x+w/2,y(d.v)-4,f0(d.v),{a:'middle',size:9,mono:1,w:600,fill:'var(--muted)'})}});
+  s+=axisMS(data,PL,bw,axY,W,PR);
+  data.forEach((d,i)=>{s+=`<rect class="he" data-i="${i}" x="${(PL+i*bw).toFixed(1)}" y="${PT}" width="${bw.toFixed(1)}" height="${ih}" fill="transparent"/>`});
+  s+='</svg>';
+  const host=$('#c-odn');host.innerHTML=s;
+  host.querySelectorAll('.he').forEach(r=>{
+    r.addEventListener('mousemove',e=>{const d=data[+r.dataset.i];
+      tipShow(`<div class="tp">${plab(d.p)}</div><div class="row"><span>ОДН</span><span>${d.v==null?'строки нет':fmt(d.v,1)+' кВт·ч'}</span></div>`,e)});
+    r.addEventListener('mouseleave',tipHide)});
+})();
+
+/* ---------- 5. тарифы ---------- */
+(function(){
+  function spark(series,w=118,h=26){
+    const v=series.map(p=>p.v), mn=Math.min(...v), mx=Math.max(...v);
+    const x=i=>i*(w/(v.length-1||1)), y=t=>h-2-((t-mn)/((mx-mn)||1))*(h-6);
+    const pts=v.map((t,i)=>[x(i),y(t)]);
+    return `<svg viewBox="0 0 ${w+4} ${h}" style="width:${w+4}px;height:${h}px">
+      <path d="${line(pts)} L ${w} ${h} L 0 ${h} Z" fill="var(--accent)" opacity=".10"/>
+      <path d="${line(pts)}" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linejoin="round"/>
+      <circle cx="${w}" cy="${y(v[v.length-1]).toFixed(1)}" r="2.6" fill="var(--accent)"/></svg>`}
+  let t='<table><thead><tr><th>Услуга</th><th class="r">Было</th><th class="r" style="padding-right:26px">Стало</th><th style="padding-left:8px">Динамика</th><th class="r">Рост</th></tr></thead><tbody>';
+  D.tariffs.forEach(x=>{
+    const cg = x.cagr==null ? '<span class="unit">новая</span>'
+      : `<span class="cagr" style="color:${x.cagr>=10?'var(--crit)':x.cagr>=8?'var(--s-rust)':'var(--ink-2)'}">+${fmt(x.cagr,1)}%</span><div class="unit">в год</div>`;
+    t+=`<tr>
+      <td><span class="svc">${esc(x.name)}</span> <span class="unit">${esc(x.unit)}</span>
+        ${x.note?`<div class="unit" style="margin-top:2px">${esc(x.note)}</div>`:''}</td>
+      <td class="r rate num">${fmt(x.from[1],2)}<div class="unit">${plab(x.from[0])}</div></td>
+      <td class="r num" style="font-weight:600;padding-right:26px">${fmt(x.to[1],2)}<div class="unit">${plab(x.to[0])}</div></td>
+      <td style="width:134px;padding-left:8px">${spark(x.series)}</td>
+      <td class="r">${cg}</td></tr>`});
+  $('#t-tariff').innerHTML=t+'</tbody></table>';
+})();
+
+/* ---------- 6. структура ---------- */
+(function(){
+  const d=D.structure.filter(x=>x.name!=='Без детализации');
+  const tot=D.structure.reduce((a,b)=>a+b.v,0);
+  const W=520,rh=26,PT=6,PL=168,PR=64;
+  const H=PT+d.length*rh+6;
+  const max=Math.max(...d.map(x=>x.v)), bw=W-PL-PR;
+  const steps=['#0d366b','#184f95','#256abf','#2a78d6','#3987e5','#5598e7','#6da7ec','#86b6ef','#9ec5f4','#b7d3f6'];
+  let s=mk(W,H);
+  d.forEach((x,i)=>{
+    const y=PT+i*rh, w=(x.v/max)*bw, c=steps[Math.min(i,steps.length-1)];
+    s+=txt(PL-8,y+15,x.name,{a:'end',fill:'var(--ink)',size:11.5,w:500});
+    s+=`<rect x="${PL}" y="${y+4}" width="${w.toFixed(1)}" height="15" fill="${c}" rx="2"/>`;
+    s+=txt(PL+w+7,y+15,fmt(x.v/tot*100,1)+'%',{fill:'var(--ink-2)',size:10.5,mono:1,w:600});
+  });
+  s+='</svg>';
+  $('#c-struct').innerHTML=s+
+   `<p class="cap">Услуги «за метр» — <b>содержание, безопасность, шлагбаумы, энергосбережение</b> — это ${fmt((d.filter(x=>['Содержание помещения','Безопасность МКД','Шлагбаум','Энергосбережение'].includes(x.name)).reduce((a,b)=>a+b.v,0))/tot*100,0)}% счёта. Экономия воды и света на итог почти не влияет.</p>`;
+})();
+
+/* ---------- 7. ₽/м² ---------- */
+(function(){
+  const d=D.rate_m2.filter(x=>x.p>='2023-01');
+  const W=430,H=190,PL=36,PR=22,PT=30,PB=26;
+  const iw=W-PL-PR, ih=H-PT-PB;
+  const mn=40, mx=Math.ceil(Math.max(...d.map(x=>x.v))/20)*20;
+  const x=i=>PL+i*(iw/(d.length-1)), y=v=>PT+ih-((v-mn)/(mx-mn))*ih;
+  let s=mk(W,H);
+  for(let v=mn;v<=mx;v+=20){s+=`<line x1="${PL}" y1="${y(v).toFixed(1)}" x2="${W-PR}" y2="${y(v).toFixed(1)}" stroke="var(--grid)" stroke-width="1"/>`;
+    s+=txt(PL-6,y(v)+3,v,{a:'end',mono:1})}
+  const pts=[];
+  d.forEach((p,i)=>{if(i){pts.push([x(i),y(d[i-1].v)])}pts.push([x(i),y(p.v)])});
+  s+=`<path d="${line(pts)} L ${x(d.length-1).toFixed(1)} ${PT+ih} L ${PL} ${PT+ih} Z" fill="var(--accent)" opacity=".09"/>`;
+  s+=`<path d="${line(pts)}" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"/>`;
+  d.forEach((p,i)=>{if(i&&Math.abs(p.v-d[i-1].v)>1){
+    s+=`<circle cx="${x(i).toFixed(1)}" cy="${y(p.v).toFixed(1)}" r="3.4" fill="var(--accent)" stroke="var(--surface)" stroke-width="1.6"/>`;
+    s+=txt(x(i),y(p.v)-9,fmt(p.v,2),{a:'middle',fill:'var(--accent)',size:10,w:600,mono:1})}});
+  d.forEach((p,i)=>{if(p.p.slice(5)==='01')s+=txt(x(i),H-9,p.p.slice(0,4),{a:'middle',mono:1,size:9.5})});
+  s+=txt(PL,PT-9,'от 103,32 в июле 2024 до 132,23 — плюс 28 %',{size:10,fill:'var(--ink-2)'});
+  s+='</svg>';
+  $('#c-rate').innerHTML=s;
+  $('#rate-note').innerHTML='Строка «Содержание жилья» в квитанции за это время <b>упала</b> со 103,32 до 80,18 — и график только по ней показал бы снижение. Разница ушла в новые статьи, появившиеся в феврале 2026.';
+})();
+
+/* ---------- 8. что требует внимания ---------- */
+(function(){
+  const LAB={crit:'срочно',warn:'спросить УК',info:'к сведению'};
+  const CL={crit:'c',warn:'w',info:'i'};
+  let hidden=new Set(), store=null, lsKey='kommunalka.hidden';
+  const lsGet=()=>{try{return new Set(JSON.parse(localStorage.getItem(lsKey)||'[]'))}catch(e){return new Set()}};
+  const lsSet=v=>{try{localStorage.setItem(lsKey,JSON.stringify([...v]))}catch(e){}};
+
+  function render(){
+    const live=ALERTS.filter(a=>!hidden.has(a.id));
+    const arch=ALERTS.filter(a=>hidden.has(a.id));
+    const n={crit:0,warn:0,info:0}; live.forEach(a=>n[a.level]++);
+    $('#ctl-head').innerHTML = live.length
+      ? `<span><b style="color:var(--ink)">${live.length}</b> ${live.length===1?'пункт':live.length<5?'пункта':'пунктов'}</span>`
+        +(n.crit?`<span style="color:var(--crit);font-weight:600">срочно ${n.crit}</span>`:'')
+        +(n.warn?`<span>спросить УК — ${n.warn}</span>`:'')
+        +(n.info?`<span>к сведению — ${n.info}</span>`:'') : '';
+    $('#todo').innerHTML = live.map(a=>
+      `<li><span class="chip ${CL[a.level]}">${LAB[a.level]}</span>
+       <div><div class="t">${esc(a.title)}</div><div class="d">${esc(a.text)}</div></div>
+       <button class="xbtn" data-hide="${esc(a.id)}" title="Скрыть в архив">Скрыть</button></li>`).join('');
+    $('#todo').style.display=live.length?'':'none';
+    if(!live.length&&!arch.length)$('#ctl-head').innerHTML='<div class="ctl-empty">Ничего не требует внимания.</div>';
+    else if(!live.length)$('#ctl-head').innerHTML='<div class="ctl-empty">Все пункты скрыты — они в архиве ниже.</div>';
+    $('#ctl-arch').innerHTML = arch.length
+      ? `<details class="arch"><summary>Скрытые — ${arch.length}</summary><ul>`
+        +arch.map(a=>`<li><span class="t">${esc(a.title)}</span>
+         <button class="xbtn" data-show="${esc(a.id)}">Вернуть</button></li>`).join('')+'</ul></details>' : '';
+    $('#ctl-note').textContent = store
+      ? 'Скрытые пункты сохраняются вместе со страницей и видны с любого устройства.'
+      : 'Скрытые пункты сохраняются в этом браузере.';
+  }
+  async function save(){
+    if(store){ try{ await store.set({ids:[...hidden]}); return }catch(e){} }
+    lsSet(hidden);
+  }
+  document.addEventListener('click',e=>{
+    const h1=e.target.closest('[data-hide]'), h2=e.target.closest('[data-show]');
+    if(h1){hidden.add(h1.dataset.hide);render();save()}
+    else if(h2){hidden.delete(h2.dataset.show);render();save()}
+  });
+  hidden=lsGet(); render();
+  (async()=>{
+    const db = window.claude && claude.use ? await claude.use('db') : null;
+    if(!db) return;
+    store = db.doc('control/hidden');
+    try{
+      const snap = await store.get();
+      if(snap.exists && Array.isArray(snap.data().ids)) hidden = new Set(snap.data().ids);
+      else if(hidden.size) await store.set({ids:[...hidden]});
+      render();
+      store.onSnapshot(s=>{ if(s.exists && Array.isArray(s.data().ids)){ hidden=new Set(s.data().ids); render() } });
+    }catch(e){ store=null; render() }
+  })();
+})();
+
+$('#foot').innerHTML=`<span>09.2020 — 08.2026 · ${M.periods} периодов · ${M.receipts} квитанций · ${M.payments} платежей</span>
+  <span>Источник: Свод_коммуналки.xlsx · собрано ${M.today}</span>`;
+</script>
